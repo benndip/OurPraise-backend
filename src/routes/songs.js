@@ -2,13 +2,20 @@ const express = require('express');
 const router = express.Router();
 const Song = require('../models/Song');
 
-router.get('/', (req, res) => {
-    res.send("Hello world")
+//Gets all posts
+router.get('/', async (req, res) => {
+    try {
+        const songs = await Song.find();
+        res.status(200).json(songs);
+    } catch (error) {
+        res.json({ message: err });
+    }
 })
 
+//Get a specific post
 router.post('/', (req, res) => {
 
-    const { title, soc, sofp, tcen } = req.body
+    const { title, soc, sofp, tcen } = req.body;
 
     const song = new Song({
         title: title,
